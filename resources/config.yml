@@ -1,0 +1,22 @@
+# ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+# ┃         FriendsX Plugin       ┃
+# ┃       Main Configuration      ┃
+# ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+# 🔧 Storage system for player data (friends list)
+# Options:
+#  - yaml   = saves data into YAML files (human-readable)
+#  - json   = saves data into JSON files
+storage: yaml
+
+# 🌐 Language for all plugin messages
+# Available: eng, ita, fra, deu, esp, por, pol
+lang: eng
+
+# ⏱️ Friend request expiration time (in seconds)
+# After this time, a pending request can no longer be accepted.
+friend-request-cooldown: 120
+
+# ✉️ Prefix shown before every message sent by the plugin
+# You can use Minecraft color codes like §6, §e, etc.
+prefix: "§7[§6FriendsX§7] §r"

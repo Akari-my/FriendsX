@@ -1,0 +1,10 @@
+name: FriendsX
+version: 1.0.0
+main: Akari_my\FriendsX\Main
+api: 5.0.0
+author: Akari_my
+description: Advanced friend system
+
+permissions:
+  friendsx.command:
+    default: true
