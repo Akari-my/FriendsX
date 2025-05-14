@@ -5,4 +5,5 @@ branches:
 projects:
   FriendsX:
     path: ""
+    icon: "icon.png"
 ...
