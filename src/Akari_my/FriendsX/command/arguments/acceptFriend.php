@@ -11,34 +11,60 @@ use pocketmine\player\Player;
 class acceptFriend implements SubCommand {
 
     public function execute(CommandSender $sender, array $args): void {
-        if (!$sender instanceof Player) return;
-
-        if (!isset($args[0])) {
-            $sender->sendMessage("§cUse: /friend accept <player>");
+        if (!$sender instanceof Player) {
             return;
         }
 
-        $target = strtolower($args[0]);
-        $player = strtolower($sender->getName());
+        $plugin = Main::getInstance();
+        $requests = $plugin->getRequestManager();
+        $friendsManager = $plugin->getFriendsManager();
 
-        $manager = Main::getInstance()->getFriendsManager();
-        $requests = Main::getInstance()->getRequestManager();
+        $playerName = $sender->getName();
+        $player = strtolower($playerName);
+
+        if (!isset($args[0])) {
+            $pending = $requests->getRequests($player);
+            if (empty($pending)) {
+                $sender->sendMessage(LangManager::get("no-requests"));
+                return;
+            }
+            if (count($pending) === 1) {
+                $target = $pending[0];
+            } else {
+                $listLines = [];
+                foreach ($pending as $name) {
+                    $listLines[] = "§7- §e" . $name;
+                }
+                $sender->sendMessage(LangManager::get("multiple-requests-accept", [
+                    "list" => implode("\n", $listLines)
+                ]));
+                return;
+            }
+        } else {
+            $target = strtolower($args[0]);
+        }
 
         if (!$requests->hasRequest($player, $target)) {
             $sender->sendMessage(LangManager::get("request-expired", ["target" => $target]));
             return;
         }
 
+        $max = $plugin->getMaxFriendsFor($sender);
+        if (count($friendsManager->getFriends($player)) >= $max) {
+            $sender->sendMessage(LangManager::get("friend-limit-reached", ["limit" => (string)$max]));
+            return;
+        }
+
         $requests->removeRequest($player, $target);
-        $manager->addFriend($player, $target);
-        $manager->addFriend($target, $player);
+        $friendsManager->addFriend($player, $target);
+        $friendsManager->addFriend($target, $player);
 
         $sender->sendMessage(LangManager::get("request-accepted", ["target" => $target]));
 
-        $targetPlayer = Main::getInstance()->getServer()->getPlayerExact($target);
+        $targetPlayer = $plugin->getPlayerByName($target);
         if ($targetPlayer !== null && $targetPlayer->isOnline()) {
             $targetPlayer->sendMessage(LangManager::get("request-accepted-notify", [
-                "player" => $sender->getName()
+                "player" => $playerName
             ]));
         }
     }

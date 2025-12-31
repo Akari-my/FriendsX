@@ -11,6 +11,7 @@ storage: yaml
 
 # 🌐 Language for all plugin messages
 # Available: eng, ita, fra, deu, esp, por, pol
+# Make sure there is a corresponding file in the /lang folder, e.g. eng.yml
 lang: eng
 
 # ⏱️ Friend request expiration time (in seconds)
@@ -20,3 +21,28 @@ friend-request-cooldown: 120
 # ✉️ Prefix shown before every message sent by the plugin
 # You can use Minecraft color codes like §6, §e, etc.
 prefix: "§7[§6FriendsX§7] §r"
+
+# 🤝 Friendship behaviour
+# If true, when a player removes a friend, the other side is also removed.
+# Example:
+#  - two-sided-friends: true  -> A removes B, B also loses A as friend
+#  - two-sided-friends: false -> A removes B, but B still has A in their list
+two-sided-friends: true
+
+# 👥 Friend limit
+# Maximum number of friends a player can have by default.
+default-friend-limit: 50
+
+# 🔐 Friend limits by permission
+# You can override the default limit using permissions.
+# Format:
+#  friend-limits:
+#    permission.node.here: limit
+#
+# Example:
+#  friend-limits:
+#    friendsx.limit.vip: 100
+#    friendsx.limit.elite: 200
+#
+# If a player has multiple permissions, the HIGHEST limit is used.
+friend-limits: {}

@@ -17,6 +17,8 @@ class JSONProvider implements DataProvider {
     public function load(): void {
         if (file_exists($this->file)) {
             $this->data = json_decode(file_get_contents($this->file), true) ?? [];
+        } else {
+            $this->data = [];
         }
     }
 
@@ -25,10 +27,19 @@ class JSONProvider implements DataProvider {
     }
 
     public function getFriends(string $player): array {
+        $player = strtolower($player);
         return $this->data[$player] ?? [];
     }
 
     public function setFriends(string $player, array $friends): void {
-        $this->data[$player] = $friends;
+        $player = strtolower($player);
+        $normalized = [];
+        foreach ($friends as $friend) {
+            $name = strtolower($friend);
+            if (!in_array($name, $normalized, true)) {
+                $normalized[] = $name;
+            }
+        }
+        $this->data[$player] = $normalized;
     }
 }

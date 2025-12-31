@@ -7,12 +7,13 @@ use Akari_my\FriendsX\data\DataProvider;
 class FriendsManager {
 
     public function __construct(private DataProvider $data) {
-        $this->data->load();
     }
 
     public function addFriend(string $player, string $friend): bool {
         $friends = $this->getFriends($player);
-        if (in_array($friend, $friends)) return false;
+        if (in_array($friend, $friends, true)) {
+            return false;
+        }
 
         $friends[] = $friend;
         $this->data->setFriends($player, $friends);
@@ -22,7 +23,9 @@ class FriendsManager {
 
     public function removeFriend(string $player, string $friend): bool {
         $friends = $this->getFriends($player);
-        if (!in_array($friend, $friends)) return false;
+        if (!in_array($friend, $friends, true)) {
+            return false;
+        }
 
         $friends = array_values(array_diff($friends, [$friend]));
         $this->data->setFriends($player, $friends);
@@ -31,7 +34,7 @@ class FriendsManager {
     }
 
     public function getFriends(string $player): array {
-        return $this->data->getFriends(strtolower($player));
+        return $this->data->getFriends($player);
     }
 
     public function getData(): DataProvider {

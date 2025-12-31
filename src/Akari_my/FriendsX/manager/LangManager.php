@@ -36,4 +36,14 @@ class LangManager {
 
         return self::$prefix . $message;
     }
+
+    public static function raw(string $key, array $placeholders = []): string {
+        $message = self::$messages[$key] ?? "§c[Missing message: $key]";
+
+        foreach ($placeholders as $search => $replace) {
+            $message = str_replace("{" . $search . "}", $replace, $message);
+        }
+
+        return $message;
+    }
 }

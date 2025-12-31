@@ -22,10 +22,19 @@ class YAMLProvider implements DataProvider {
     }
 
     public function getFriends(string $player): array {
+        $player = strtolower($player);
         return $this->config->get($player, []);
     }
 
     public function setFriends(string $player, array $friends): void {
-        $this->config->set($player, $friends);
+        $player = strtolower($player);
+        $normalized = [];
+        foreach ($friends as $friend) {
+            $name = strtolower($friend);
+            if (!in_array($name, $normalized, true)) {
+                $normalized[] = $name;
+            }
+        }
+        $this->config->set($player, $normalized);
     }
 }

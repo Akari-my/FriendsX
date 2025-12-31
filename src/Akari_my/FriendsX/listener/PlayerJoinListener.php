@@ -8,35 +8,55 @@ use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 
-class PlayerJoinListener implements Listener{
+class PlayerJoinListener implements Listener {
 
     public function __construct(private Main $plugin) {}
 
     public function onJoin(PlayerJoinEvent $event): void {
-        $joinedName = strtolower($event->getPlayer()->getName());
+        $joinedPlayer = $event->getPlayer();
+        $joinedName = strtolower($joinedPlayer->getName());
+
+        $settings = $this->plugin->getSettingsManager();
 
         foreach ($this->plugin->getServer()->getOnlinePlayers() as $player) {
+            if ($player->getId() === $joinedPlayer->getId()) {
+                continue;
+            }
+
             $check = strtolower($player->getName());
-            if ($check === $joinedName) continue;
+            if (!$settings->canReceiveFriendNotifications($check)) {
+                continue;
+            }
 
             $friends = $this->plugin->getFriendsManager()->getFriends($check);
-            if (in_array($joinedName, $friends)) {
-                $player->sendMessage(LangManager::get("friend-joined", ["name" => $event->getPlayer()->getName()]));
+            if (in_array($joinedName, $friends, true)) {
+                $player->sendMessage(LangManager::get("friend-joined", ["name" => $joinedPlayer->getName()]));
             }
         }
     }
 
     public function onQuit(PlayerQuitEvent $event): void {
-        $quitName = strtolower($event->getPlayer()->getName());
+        $quitPlayer = $event->getPlayer();
+        $quitName = strtolower($quitPlayer->getName());
+
+        $this->plugin->getLastSeenManager()->setLastSeen($quitName, time());
+
+        $settings = $this->plugin->getSettingsManager();
 
         foreach ($this->plugin->getServer()->getOnlinePlayers() as $player) {
+            if ($player->getId() === $quitPlayer->getId()) {
+                continue;
+            }
+
             $check = strtolower($player->getName());
-            if ($check === $quitName) continue;
+            if (!$settings->canReceiveFriendNotifications($check)) {
+                continue;
+            }
 
             $friends = $this->plugin->getFriendsManager()->getFriends($check);
-            if (in_array($quitName, $friends)) {
+            if (in_array($quitName, $friends, true)) {
                 $player->sendMessage(LangManager::get("friend-left", [
-                    "name" => $event->getPlayer()->getName()
+                    "name" => $quitPlayer->getName()
                 ]));
             }
         }
