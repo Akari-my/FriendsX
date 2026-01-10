@@ -10,7 +10,7 @@
 storage: yaml
 
 # 🌐 Language for all plugin messages
-# Available: eng, ita, fra, deu, esp, por, pol
+# Available: eng, ita, fra, deu, esp, por, pol, ukr
 # Make sure there is a corresponding file in the /lang folder, e.g. eng.yml
 lang: eng
 

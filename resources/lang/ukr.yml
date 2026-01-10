@@ -1,0 +1,66 @@
+friend-request-sent: "§aВи надіслали запит на дружбу гравцеві §e{target}§a!"
+friend-request-received: "§aВи отримали запит на дружбу від §e{sender}§a! Щоб прийняти, використайте §b/friend accept {name}§a, а щоб відхилити — §c/friend deny {name}"
+already-friends: "§cВи вже друзі!"
+self-friend: "§cВи не можете додати себе!"
+request-already-sent: "§cВи вже надіслали запит на дружбу гравцеві {target}."
+request-accepted: "§aВи прийняли запит на дружбу від гравця §e{target}§a!"
+request-denied: "§eВи відхилили запит на дружбу від гравця §c{target}."
+player-not-in-requests: "§cУ вас немає активного запиту від гравця {target}."
+friend-joined: "§e{name}§a приєднався до гри!"
+friend-removed: "§aВи видалили гравця §e{target}§a зі списку друзів."
+not-in-friend-list: "§cГравця {target} немає у вашому списку друзів."
+no-friends: "§eВаш список друзів порожній."
+friends-list: "§aСписок друзів:
+{list}"
+request-cooldown: "§cВи вже надіслали запит до {target}, зачекайте {time}."
+player-not-online: "§cГравець §e{target}§c зараз не в мережі!"
+request-accepted-notify: "§aГравець {player} прийняв ваш запит на дружбу!"
+friend-left: "§aВаш друг §e{name}§a залишив гру!"
+request-expired: "§cТермін дії запиту від гравця §e{target}§c вичерпано."
+
+only-player-command: "§c✖ Цю команду можуть використовувати тільки гравці!"
+friend-usage: "§eВикористання: §b/friend <add, list, remove, accept, deny, requests, settings, block, unblock, blocked>"
+unknown-subcommand: "§cНевідома підкоманда. Використання: §b/friend <add, list, remove, accept, deny, requests, settings, block, unblock, blocked>"
+
+no-requests: "§eНаразі у вас немає активних запитів на дружбу."
+multiple-requests-accept: "§eУ вас є кілька активних запитів на дружбу:
+{list}
+§eДля прийняття використайте §b/friend accept <player>§e."
+multiple-requests-deny: "§eУ вас є кілька активних запитів на дружбу:
+{list}
+§eДля відхилення використайте §b/friend deny <player>§e."
+requests-list: "§aАктивні запити на дружбу:\n{list}"
+request-expires-in: "закінчується через {time}"
+
+status-online: "§aУ мережі"
+status-offline: "§cНе в мережі"
+last-seen: "був онлайн {time} тому"
+
+friend-add-usage: "§cВикористання: /friend add <player>"
+friend-remove-usage: "§cВикористання: /friend remove <player>"
+
+settings-header: "§6Налаштування друзів:"
+settings-receive-requests: "§eОтримувати запити на дружбу: §f{value}"
+settings-notifications: "§eСповіщення про приєднання/вихід друзів: §f{value}"
+settings-usage: "§eВикористання: §b/friend settings <togglerequests|togglenotify>"
+settings-toggled-requests: "§aСтатус отримання запитів на дружбу: §f{value}"
+settings-toggled-notifications: "§aСтатус сповіщень про друзів: §f{value}"
+settings-on: "§aУВІМКНЕНО"
+settings-off: "§cВИМКНЕНО"
+
+target-not-accepting-requests: "§cГравець {target} не приймає запити на дружбу."
+you-are-blocked: "§cВи не можете надіслати запит на дружбу гравцеві {target}."
+you-blocked-target: "§cВи заблокували гравця {target}. Спершу його потрібно розблокувати."
+
+friend-limit-reached: "§cВи досягли максимальної кількості друзів (§e{limit}§c)."
+
+block-usage: "§cВикористання: /friend block <player>"
+unblock-usage: "§cВикористання: /friend unblock <player>"
+block-self: "§cВи не можете заблокувати себе."
+already-blocked: "§cВи вже заблокували {target}."
+not-blocked: "§cВи не заблокували {target}."
+blocked-success: "§aВи успішно заблокували гравця §e{target}§a."
+unblocked-success: "§aВи успішно розблокували гравця §e{target}§a."
+blocked-list-empty: "§eВаш список заблокованих гравців порожній."
+blocked-list: "§aЗаблоковані гравці:
+{list}"
