@@ -23,12 +23,8 @@ friend-usage: "§eВикористання: §b/friend <add, list, remove, accep
 unknown-subcommand: "§cНевідома підкоманда. Використання: §b/friend <add, list, remove, accept, deny, requests, settings, block, unblock, blocked>"
 
 no-requests: "§eНаразі у вас немає активних запитів на дружбу."
-multiple-requests-accept: "§eУ вас є кілька активних запитів на дружбу:
-{list}
-§eДля прийняття використайте §b/friend accept <player>§e."
-multiple-requests-deny: "§eУ вас є кілька активних запитів на дружбу:
-{list}
-§eДля відхилення використайте §b/friend deny <player>§e."
+multiple-requests-accept: "§eУ вас є кілька активних запитів на дружбу:\n{list}\n§eДля прийняття використайте §b/friend accept <гравець>§e."
+multiple-requests-deny: "§eУ вас є кілька активних запитів на дружбу:\n{list}\n§eДля відхилення використайте §b/friend deny <гравець>§e."
 requests-list: "§aАктивні запити на дружбу:\n{list}"
 request-expires-in: "закінчується через {time}"
 
@@ -36,8 +32,8 @@ status-online: "§aУ мережі"
 status-offline: "§cНе в мережі"
 last-seen: "був онлайн {time} тому"
 
-friend-add-usage: "§cВикористання: /friend add <player>"
-friend-remove-usage: "§cВикористання: /friend remove <player>"
+friend-add-usage: "§cВикористання: /friend add <гравець>"
+friend-remove-usage: "§cВикористання: /friend remove <гравець>"
 
 settings-header: "§6Налаштування друзів:"
 settings-receive-requests: "§eОтримувати запити на дружбу: §f{value}"
@@ -54,8 +50,8 @@ you-blocked-target: "§cВи заблокували гравця {target}. Сп�
 
 friend-limit-reached: "§cВи досягли максимальної кількості друзів (§e{limit}§c)."
 
-block-usage: "§cВикористання: /friend block <player>"
-unblock-usage: "§cВикористання: /friend unblock <player>"
+block-usage: "§cВикористання: /friend block <гравець>"
+unblock-usage: "§cВикористання: /friend unblock <гравець>"
 block-self: "§cВи не можете заблокувати себе."
 already-blocked: "§cВи вже заблокували {target}."
 not-blocked: "§cВи не заблокували {target}."
