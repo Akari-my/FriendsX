@@ -13,7 +13,6 @@ use Akari_my\FriendsX\manager\LangManager;
 use Akari_my\FriendsX\manager\LastSeenManager;
 use Akari_my\FriendsX\manager\RequestManager;
 use Akari_my\FriendsX\manager\SettingsManager;
-use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
 
 class Main extends PluginBase {
@@ -26,21 +25,35 @@ class Main extends PluginBase {
     private SettingsManager $settingsManager;
     private BlockManager $blockManager;
     private LastSeenManager $lastSeenManager;
+    private bool $formsEnabled = false;
 
     public function onEnable(): void {
         self::$instance = $this;
 
         @mkdir($this->getDataFolder() . "data/");
         @mkdir($this->getDataFolder() . "lang/");
-        @mkdir($this->getDataFolder() . "sql/");
 
         $this->saveResource("config.yml");
         $this->saveResource("lang/eng.yml");
         $this->saveResource("lang/ita.yml");
+        $this->saveResource("lang/deu.yml");
+        $this->saveResource("lang/esp.yml");
+        $this->saveResource("lang/fra.yml");
+        $this->saveResource("lang/pol.yml");
+        $this->saveResource("lang/por.yml");
+        $this->saveResource("lang/ukr.yml");
+        $this->saveResource("lang/rus.yml");
+        $this->saveResource("lang/jpn.yml");
+        $this->saveResource("lang/kor.yml");
+        $this->saveResource("lang/zho.yml");
+        $this->saveResource("lang/tur.yml");
 
         LangManager::init($this);
 
         $config = $this->getConfig();
+
+        $this->formsEnabled = (bool)$config->getNested("forms.enabled", false);
+
         $storageType = strtolower($config->get("storage", "yaml"));
 
         switch ($storageType) {
@@ -61,7 +74,7 @@ class Main extends PluginBase {
         $this->lastSeenManager = new LastSeenManager($this);
 
         $this->getServer()->getPluginManager()->registerEvents(new PlayerJoinListener($this), $this);
-        $this->getServer()->getCommandMap()->register("friend", new FriendsCommand($this));
+        $this->getServer()->getCommandMap()->register("friends", new FriendsCommand($this));
     }
 
     public function getFriendsManager(): FriendsManager {
@@ -84,27 +97,8 @@ class Main extends PluginBase {
         return $this->lastSeenManager;
     }
 
-    public function getMaxFriendsFor(Player $player): int {
-        $config = $this->getConfig();
-        $max = (int)$config->get("default-friend-limit", 50);
-        $permLimits = $config->get("friend-limits", []);
-        if (is_array($permLimits)) {
-            foreach ($permLimits as $permission => $limit) {
-                if ($player->hasPermission((string)$permission)) {
-                    $max = max($max, (int)$limit);
-                }
-            }
-        }
-        return $max;
-    }
-
-    public function getPlayerByName(string $name): ?Player {
-        foreach ($this->getServer()->getOnlinePlayers() as $player) {
-            if (strcasecmp($player->getName(), $name) === 0) {
-                return $player;
-            }
-        }
-        return null;
+    public function areFormsEnabled(): bool {
+        return $this->formsEnabled;
     }
 
     public static function getInstance(): self {
