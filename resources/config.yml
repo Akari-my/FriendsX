@@ -46,3 +46,8 @@ default-friend-limit: 50
 #
 # If a player has multiple permissions, the HIGHEST limit is used.
 friend-limits: {}
+
+# 🎛 UI / Forms
+# Enable or disable UI menus..
+forms:
+  enabled: true

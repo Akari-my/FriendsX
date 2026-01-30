@@ -5,6 +5,7 @@ namespace Akari_my\FriendsX\command\arguments;
 use Akari_my\FriendsX\command\SubCommand;
 use Akari_my\FriendsX\Main;
 use Akari_my\FriendsX\manager\LangManager;
+use Akari_my\FriendsX\util\Functions;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 
@@ -49,7 +50,7 @@ class acceptFriend implements SubCommand {
             return;
         }
 
-        $max = $plugin->getMaxFriendsFor($sender);
+        $max = Functions::getMaxFriendsFor($sender);
         if (count($friendsManager->getFriends($player)) >= $max) {
             $sender->sendMessage(LangManager::get("friend-limit-reached", ["limit" => (string)$max]));
             return;
@@ -61,7 +62,7 @@ class acceptFriend implements SubCommand {
 
         $sender->sendMessage(LangManager::get("request-accepted", ["target" => $target]));
 
-        $targetPlayer = $plugin->getPlayerByName($target);
+        $targetPlayer = Functions::getPlayerByName($target);
         if ($targetPlayer !== null && $targetPlayer->isOnline()) {
             $targetPlayer->sendMessage(LangManager::get("request-accepted-notify", [
                 "player" => $playerName

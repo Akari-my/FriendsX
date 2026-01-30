@@ -32,7 +32,7 @@ class listFriend implements SubCommand {
         $lastSeenManager = $plugin->getLastSeenManager();
 
         foreach ($friends as $friendName) {
-            $onlinePlayer = $plugin->getPlayerByName($friendName);
+            $onlinePlayer = Functions::getPlayerByName($friendName);
             if ($onlinePlayer !== null && $onlinePlayer->isOnline()) {
                 $displayName = $onlinePlayer->getName();
                 $status = LangManager::raw("status-online");

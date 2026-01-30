@@ -12,6 +12,7 @@ use Akari_my\FriendsX\command\arguments\removeFriend;
 use Akari_my\FriendsX\command\arguments\requestsFriend;
 use Akari_my\FriendsX\command\arguments\settingsFriend;
 use Akari_my\FriendsX\command\arguments\unblockFriend;
+use Akari_my\FriendsX\form\MainForm;
 use Akari_my\FriendsX\Main;
 use Akari_my\FriendsX\manager\LangManager;
 use pocketmine\command\Command;
@@ -36,7 +37,7 @@ class FriendsCommand extends Command implements PluginOwned {
     private blockedFriend $blockedFriend;
 
     public function __construct(Main $plugin) {
-        parent::__construct("friend", "Friends management", "/friend <add, list, remove, accept, deny, requests, settings, block, unblock, blocked>");
+        parent::__construct("friends", "Friends management", "/friend");
 
         $this->plugin = $plugin;
 
@@ -61,6 +62,10 @@ class FriendsCommand extends Command implements PluginOwned {
         }
 
         if (!isset($args[0])) {
+            if ($this->plugin->areFormsEnabled()) {
+                MainForm::open($sender);
+                return true;
+            }
             $sender->sendMessage(LangManager::get("friend-usage"));
             return true;
         }
@@ -106,7 +111,7 @@ class FriendsCommand extends Command implements PluginOwned {
         return true;
     }
 
-    public function getOwningPlugin(): Main {
+    public function getOwningPlugin(): Plugin {
         return $this->plugin;
     }
 }
