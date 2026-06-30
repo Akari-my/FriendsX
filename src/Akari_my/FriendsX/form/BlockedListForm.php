@@ -10,52 +10,72 @@ use pocketmine\player\Player;
 
 class BlockedListForm {
 
-    public static function open(Player $player): void {
+    private const PER_PAGE = 10;
+
+    public static function open(Player $player, int $page = 0): void {
         $plugin = Main::getInstance();
-        if (!$plugin->areFormsEnabled()) {
-            return;
-        }
+        if (!$plugin->areFormsEnabled()) return;
 
         $blockManager = $plugin->getBlockManager();
         $playerName = $player->getName();
         $blocked = array_values($blockManager->getBlockedList($playerName));
+        $total = count($blocked);
+        $maxPage = (int)ceil($total / self::PER_PAGE) - 1;
+        if ($maxPage < 0) $maxPage = 0;
+        if ($page > $maxPage) $page = $maxPage;
+        $start = $page * self::PER_PAGE;
+        $slice = array_slice($blocked, $start, self::PER_PAGE);
 
-        $form = new SimpleForm(function (Player $player, ?int $data) use ($blocked): void {
+        $form = new SimpleForm(function (Player $player, ?int $data) use ($blocked, $page, $maxPage, $total): void {
             if ($data === null) {
                 MainForm::open($player);
                 return;
             }
 
-            if (empty($blocked)) {
-                if ($data === 0) {
-                    MainForm::open($player);
+            $friendCount = count(array_slice($blocked, $page * self::PER_PAGE, self::PER_PAGE));
+            $idx = 0;
+
+            if ($total > 0 && $data < $friendCount) {
+                $globalIdx = $page * self::PER_PAGE + $data;
+                if (isset($blocked[$globalIdx])) {
+                    (new unblockFriend())->execute($player, [$blocked[$globalIdx]]);
+                    BlockedListForm::open($player);
                 }
                 return;
             }
+            $idx = $friendCount;
 
-            if (!isset($blocked[$data])) {
+            if ($page > 0 && $data === $idx) {
+                BlockedListForm::open($player, $page - 1);
+                return;
+            }
+            if ($page > 0) $idx++;
+
+            if ($page < $maxPage && $data === $idx) {
+                BlockedListForm::open($player, $page + 1);
                 return;
             }
 
-            $target = $blocked[$data];
-            (new unblockFriend())->execute($player, [$target]);
-            BlockedListForm::open($player);
+            MainForm::open($player);
         });
 
-        $form->setTitle(LangManager::raw("ui-blocked-title"));
+        $title = LangManager::raw("ui-blocked-title");
+        if ($total > 0) $title .= " §7(" . ($page + 1) . "/" . ($maxPage + 1) . ")";
+        $form->setTitle($title);
 
-        if (empty($blocked)) {
+        if ($total === 0) {
             $form->setContent(LangManager::raw("ui-blocked-empty"));
             $form->addButton(LangManager::raw("ui-button-back"));
         } else {
             $form->setContent(LangManager::raw("ui-blocked-content"));
-            foreach ($blocked as $name) {
-                $label = LangManager::raw("ui-blocked-entry", ["name" => $name]);
-                $form->addButton($label);
+            foreach ($slice as $name) {
+                $form->addButton(LangManager::raw("ui-blocked-entry", ["name" => $name]));
             }
+            if ($page > 0) $form->addButton(LangManager::raw("ui-prev-page"));
+            if ($page < $maxPage) $form->addButton(LangManager::raw("ui-next-page"));
+            $form->addButton(LangManager::raw("ui-button-back"));
         }
 
         $form->sendTo($player);
     }
-
 }

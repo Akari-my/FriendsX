@@ -9,50 +9,71 @@ use Akari_my\FriendsX\Main;
 use Akari_my\FriendsX\manager\LangManager;
 use pocketmine\player\Player;
 
-class RequestsForm{
+class RequestsForm {
 
-    public static function open(Player $player): void {
+    private const PER_PAGE = 10;
+
+    public static function open(Player $player, int $page = 0): void {
         $plugin = Main::getInstance();
-        if (!$plugin->areFormsEnabled()) {
-            return;
-        }
+        if (!$plugin->areFormsEnabled()) return;
 
         $requestsManager = $plugin->getRequestManager();
         $playerLower = strtolower($player->getName());
         $requests = array_values($requestsManager->getRequests($playerLower));
+        $total = count($requests);
+        $maxPage = (int)ceil($total / self::PER_PAGE) - 1;
+        if ($maxPage < 0) $maxPage = 0;
+        if ($page > $maxPage) $page = $maxPage;
+        $start = $page * self::PER_PAGE;
+        $slice = array_slice($requests, $start, self::PER_PAGE);
 
-        $form = new SimpleForm(function (Player $player, ?int $data) use ($requests): void {
+        $form = new SimpleForm(function (Player $player, ?int $data) use ($requests, $page, $maxPage, $total): void {
             if ($data === null) {
                 MainForm::open($player);
                 return;
             }
 
-            if (empty($requests)) {
-                if ($data === 0) {
-                    MainForm::open($player);
+            $friendCount = count(array_slice($requests, $page * self::PER_PAGE, self::PER_PAGE));
+            $idx = 0;
+
+            if ($total > 0 && $data < $friendCount) {
+                $globalIdx = $page * self::PER_PAGE + $data;
+                if (isset($requests[$globalIdx])) {
+                    self::openActions($player, $requests[$globalIdx]);
                 }
                 return;
             }
+            $idx = $friendCount;
 
-            if (!isset($requests[$data])) {
+            if ($page > 0 && $data === $idx) {
+                self::open($player, $page - 1);
+                return;
+            }
+            if ($page > 0) $idx++;
+
+            if ($page < $maxPage && $data === $idx) {
+                self::open($player, $page + 1);
                 return;
             }
 
-            $from = $requests[$data];
-            self::openActions($player, $from);
+            MainForm::open($player);
         });
 
-        $form->setTitle(LangManager::raw("ui-requests-title"));
+        $title = LangManager::raw("ui-requests-title");
+        if ($total > 0) $title .= " §7(" . ($page + 1) . "/" . ($maxPage + 1) . ")";
+        $form->setTitle($title);
 
-        if (empty($requests)) {
+        if ($total === 0) {
             $form->setContent(LangManager::raw("ui-requests-empty"));
             $form->addButton(LangManager::raw("ui-button-back"));
         } else {
             $form->setContent(LangManager::raw("ui-requests-content"));
-            foreach ($requests as $name) {
-                $label = LangManager::raw("ui-requests-entry", ["name" => $name]);
-                $form->addButton($label);
+            foreach ($slice as $name) {
+                $form->addButton(LangManager::raw("ui-requests-entry", ["name" => $name]));
             }
+            if ($page > 0) $form->addButton(LangManager::raw("ui-prev-page"));
+            if ($page < $maxPage) $form->addButton(LangManager::raw("ui-next-page"));
+            $form->addButton(LangManager::raw("ui-button-back"));
         }
 
         $form->sendTo($player);
@@ -60,9 +81,7 @@ class RequestsForm{
 
     private static function openActions(Player $player, string $from): void {
         $plugin = Main::getInstance();
-        if (!$plugin->areFormsEnabled()) {
-            return;
-        }
+        if (!$plugin->areFormsEnabled()) return;
 
         $form = new SimpleForm(function (Player $player, ?int $data) use ($from): void {
             if ($data === null) {

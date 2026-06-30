@@ -7,10 +7,12 @@
 # Options:
 #  - yaml   = saves data into YAML files (human-readable)
 #  - json   = saves data into JSON files
+#  - sqlite = stores data in an embedded SQLite database (recommended for larger servers)
+# Note: when switching to sqlite, the plugin will attempt to import data/friends_v2.json (created by /friends migrate) into the database on startup.
 storage: yaml
 
 # 🌐 Language for all plugin messages
-# Available: eng, ita, fra, deu, esp, por, pol, ukr
+# Available: eng, ita, fra, deu, esp, por, pol, ukr, rus, jpn, kor, zho, tur
 # Make sure there is a corresponding file in the /lang folder, e.g. eng.yml
 lang: eng
 

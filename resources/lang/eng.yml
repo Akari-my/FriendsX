@@ -18,8 +18,8 @@ friend-left: "§aYour friend §e{name}§a has left the server!"
 request-expired: "§cThe request from §e{target}§c has expired."
 
 only-player-command: "§c✖ Only players can use this command!"
-friend-usage: "§eUse: §b/friend <add, list, remove, accept, deny, requests, settings, block, unblock, blocked>"
-unknown-subcommand: "§cUnknown subcommand. Use: §b/friend <add, list, remove, accept, deny, requests, settings, block, unblock, blocked>"
+friend-usage: "§eUse: §b/friend <add, list, remove, accept, deny, requests, settings, block, unblock, blocked, msg, top, status>"
+unknown-subcommand: "§cUnknown subcommand. Use: §b/friend <add, list, remove, accept, deny, requests, settings, block, unblock, blocked, msg, top, status>"
 
 no-requests: "§eYou have no pending friend requests."
 multiple-requests-accept: "§eYou have multiple pending friend requests:\n{list}\n§eUse §b/friend accept <player>§e to choose."
@@ -33,6 +33,25 @@ last-seen: "last seen {time} ago"
 
 friend-add-usage: "§cUse: /friend add <player>"
 friend-remove-usage: "§cUse: /friend remove <player>"
+
+msg-usage: "§cUse: /friend msg <player> <message>"
+msg-received: "§d{sender} §7→ §f{message}"
+msg-sent: "§7You → §d{target}§7: §f{message}"
+
+
+
+top-header: "§6=== Top Friends ==="
+top-empty: "§eNo data available yet."
+top-friends-count: "friends"
+
+status-current: "§eYour current status: {status}"
+status-usage: "§eUse: /friend status <online|away|busy|invisible>"
+status-invalid: "§cInvalid status. Use: online, away, busy, invisible."
+status-set: "§aYour status has been set to: {status}"
+
+friend-fav-added: "§a§e{target}§a is now a favorite friend!"
+friend-fav-removed: "§e{target}§e is no longer a favorite friend."
+friend-group-set: "§a{target} moved to group: {group}"
 
 settings-header: "§6Friends settings:"
 settings-receive-requests: "§eReceive friend requests: §f{value}"
@@ -48,6 +67,7 @@ you-are-blocked: "§cYou cannot send a friend request to {target}."
 you-blocked-target: "§cYou have blocked {target}. Unblock them first."
 
 friend-limit-reached: "§cYou have reached the maximum number of friends (§e{limit}§c)."
+friend-target-limit-reached: "§c{target} has reached the maximum number of friends."
 
 block-usage: "§cUse: /friend block <player>"
 unblock-usage: "§cUse: /friend unblock <player>"
@@ -59,6 +79,13 @@ unblocked-success: "§aYou have unblocked §e{target}§a."
 blocked-list-empty: "§eYour blocked list is empty."
 blocked-list: "§aBlocked players:\n{list}"
 
+config-reloaded: "§aConfiguration reloaded successfully."
+
+ui-confirm-remove-title: "§6Confirm removal"
+ui-confirm-remove-content: "§7Are you sure you want to remove §e{name}§7 from your friends?"
+ui-confirm-remove-yes: "§cYes, remove"
+ui-confirm-remove-no: "§7Cancel"
+
 ui-main-title: "§6Friends Menu"
 ui-main-content: "§7Select an option:"
 ui-main-button-friends: "§eFriends list"
@@ -69,8 +96,17 @@ ui-main-button-blocked: "§eBlocked players"
 ui-friends-title: "§6Your friends"
 ui-friends-content: "§7Tap a friend to manage them."
 ui-friends-empty: "§7You do not have any friends yet."
+ui-friends-search-btn: "§eSearch friends"
+ui-friends-search-title: "§6Search friends"
+ui-friends-search-input: "§7Friend name"
+ui-friends-search-placeholder: "§7Type to search..."
+ui-friends-search-none: "§7No friends found matching your search."
 ui-friend-actions-title: "§6Friend: §e{name}"
 ui-friend-actions-content: "§7Choose an action for §e{name}§7."
+ui-friend-actions-content-ext: "§7Manage §e{name}§7.\n§7Group: {group}"
+ui-friend-actions-fav: "§6★ Add to favorites"
+ui-friend-actions-unfav: "§6★ Remove from favorites"
+ui-friend-actions-group: "§eChange group"
 ui-friend-actions-remove: "§cRemove friend"
 
 ui-requests-title: "§6Friend requests"
@@ -83,6 +119,9 @@ ui-request-actions-content: "§7What do you want to do with §e{name}§7?"
 ui-request-actions-accept: "§aAccept"
 ui-request-actions-deny: "§cDeny"
 
+ui-group-select-title: "§6Select group"
+ui-group-select-content: "§7Choose a group for §e{name}§7:"
+
 ui-settings-title: "§6Friends settings"
 ui-settings-content: "§7Requests: {requests}\n§7Notifications: {notifications}"
 ui-settings-toggle-requests: "§eToggle friend requests ({value})"
@@ -92,5 +131,8 @@ ui-blocked-title: "§6Blocked players"
 ui-blocked-content: "§7Tap a player to unblock them."
 ui-blocked-empty: "§7You have not blocked any players."
 ui-blocked-entry: "§e{name}"
+
+ui-prev-page: "§7◀ Previous page"
+ui-next-page: "§7Next page ▶"
 
 ui-button-back: "§7Back"

@@ -18,8 +18,8 @@ friend-left: "§aSeu amigo §e{name}§a saiu do servidor!"
 request-expired: "§cO pedido de §e{target}§c expirou."
 
 only-player-command: "§c✖ Apenas jogadores podem usar este comando!"
-friend-usage: "§eUse: §b/friend <add, list, remove, accept, deny, requests, settings, block, unblock, blocked>"
-unknown-subcommand: "§cSubcomando desconhecido. Use: §b/friend <add, list, remove, accept, deny, requests, settings, block, unblock, blocked>"
+friend-usage: "§eUse: §b/friend <add, list, remove, accept, deny, requests, settings, block, unblock, blocked, msg, top, status>"
+unknown-subcommand: "§cSubcomando desconhecido. Use: §b/friend <add, list, remove, accept, deny, requests, settings, block, unblock, blocked, msg, top, status>"
 
 no-requests: "§eVocê não tem pedidos de amizade pendentes."
 multiple-requests-accept: "§eVocê tem vários pedidos de amizade pendentes:\n{list}\n§eUse §b/friend accept <jogador>§e para escolher."
@@ -33,6 +33,23 @@ last-seen: "visto pela última vez há {time}"
 
 friend-add-usage: "§cUse: /friend add <jogador>"
 friend-remove-usage: "§cUse: /friend remove <jogador>"
+
+msg-usage: "§cUse: /friend msg <jogador> <mensagem>"
+msg-received: "§a{remetente} §7→ §f{mensagem}"
+msg-sent: "§aVocê §7→ §e{destinatario}§7: §f{mensagem}"
+
+top-header: "§6=== Top Amigos ==="
+top-empty: "§7Nenhum dado disponível ainda."
+top-friends-count: "§7amigos"
+
+status-current: "§aSeu status atual: §e{status}"
+status-usage: "§cUse: /friend status <online|ausente|ocupado|invisivel>"
+status-invalid: "§cStatus inválido. Use: online, ausente, ocupado, invisivel."
+status-set: "§aSeu status foi definido como: §e{status}"
+
+friend-fav-added: "§a{destinatario}§a agora é um amigo favorito!"
+friend-fav-removed: "§a{destinatario}§a não é mais um amigo favorito."
+friend-group-set: "§a{destinatario}§a movido para o grupo: §e{grupo}"
 
 settings-header: "§6Configurações de amigos:"
 settings-receive-requests: "§eReceber pedidos de amizade: §f{value}"
@@ -48,6 +65,7 @@ you-are-blocked: "§cVocê não pode enviar um pedido de amizade para {target}."
 you-blocked-target: "§cVocê bloqueou {target}. Desbloqueie-o primeiro."
 
 friend-limit-reached: "§cVocê atingiu o número máximo de amigos (§e{limit}§c)."
+friend-target-limit-reached: "§c{target} atingiu o número máximo de amigos."
 
 block-usage: "§cUse: /friend block <jogador>"
 unblock-usage: "§cUse: /friend unblock <jogador>"
@@ -59,6 +77,13 @@ unblocked-success: "§aVocê desbloqueou §e{target}§a."
 blocked-list-empty: "§eVocê não bloqueou nenhum jogador."
 blocked-list: "§aJogadores bloqueados:\n{list}"
 
+config-reloaded: "§aConfiguração recarregada com sucesso."
+
+ui-confirm-remove-title: "§6Confirmar remoção"
+ui-confirm-remove-content: "§7Tem certeza de que deseja remover §e{name}§7 dos seus amigos?"
+ui-confirm-remove-yes: "§cSim, remover"
+ui-confirm-remove-no: "§7Cancelar"
+
 ui-main-title: "§6Menu de amigos"
 ui-main-content: "§7Selecione uma opção:"
 ui-main-button-friends: "§eLista de amigos"
@@ -69,8 +94,20 @@ ui-main-button-blocked: "§eJogadores bloqueados"
 ui-friends-title: "§6Seus amigos"
 ui-friends-content: "§7Toque em um amigo para gerenciá-lo."
 ui-friends-empty: "§7Você ainda não tem nenhum amigo."
+
+ui-search-friends: "§7Procurar amigos"
+ui-search-friend-name: "§7Nome do amigo"
+ui-search-type: "§7Digite para procurar..."
+ui-search-no-results: "§7Nenhum amigo encontrado para sua pesquisa."
+
 ui-friend-actions-title: "§6Amigo: §e{name}"
 ui-friend-actions-content: "§7Escolha uma ação para §e{name}§7."
+
+ui-friend-actions-manage: "§7Gerenciar §e{name}§7. / Grupo: §e{group}"
+ui-friend-actions-fav-add: "§eAdicionar aos favoritos §6★"
+ui-friend-actions-fav-remove: "§eRemover dos favoritos §6★"
+ui-friend-actions-group: "§eAlterar grupo"
+
 ui-friend-actions-remove: "§cRemover amigo"
 
 ui-requests-title: "§6Pedidos de amizade"
@@ -83,6 +120,9 @@ ui-request-actions-content: "§7O que você quer fazer com §e{name}§7?"
 ui-request-actions-accept: "§aAceitar"
 ui-request-actions-deny: "§cRecusar"
 
+ui-group-select-title: "§6Selecionar grupo"
+ui-group-select-content: "§7Escolha um grupo para §e{name}§7:"
+
 ui-settings-title: "§6Configurações de amigos"
 ui-settings-content: "§7Pedidos: {requests}\n§7Notificações: {notifications}"
 ui-settings-toggle-requests: "§eAlternar pedidos de amizade ({value})"
@@ -92,5 +132,8 @@ ui-blocked-title: "§6Jogadores bloqueados"
 ui-blocked-content: "§7Toque em um jogador para desbloqueá-lo."
 ui-blocked-empty: "§7Você não bloqueou nenhum jogador."
 ui-blocked-entry: "§e{name}"
+
+ui-pagination-previous: "§ePágina anterior §6◀"
+ui-pagination-next: "§ePróxima página §6▶"
 
 ui-button-back: "§7Voltar"

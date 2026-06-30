@@ -5,6 +5,7 @@ namespace Akari_my\FriendsX\command\arguments;
 use Akari_my\FriendsX\command\SubCommand;
 use Akari_my\FriendsX\Main;
 use Akari_my\FriendsX\manager\LangManager;
+use Akari_my\FriendsX\util\Functions;
 use Akari_my\FriendsX\util\TimeUtils;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;

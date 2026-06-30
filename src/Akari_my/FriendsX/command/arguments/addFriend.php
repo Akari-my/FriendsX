@@ -72,8 +72,8 @@ class addFriend implements SubCommand {
             return;
         }
 
-        if ($requestManager->hasRequest($player, $target)) {
-            $requestManager->removeRequest($player, $target);
+        if ($requestManager->hasRequest($target, $player)) {
+            $requestManager->removeRequest($target, $player);
             $friendsManager->addFriend($player, $target);
             $friendsManager->addFriend($target, $player);
 
@@ -84,6 +84,12 @@ class addFriend implements SubCommand {
                     "player" => $playerName
                 ]));
             }
+            return;
+        }
+
+        $maxTarget = Functions::getMaxFriendsFor($targetPlayer);
+        if (count($friendsManager->getFriends($target)) >= $maxTarget) {
+            $sender->sendMessage(LangManager::get("friend-target-limit-reached", ["target" => $targetName]));
             return;
         }
 

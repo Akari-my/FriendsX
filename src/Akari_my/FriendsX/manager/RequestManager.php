@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Akari_my\FriendsX\manager;
 
 use Akari_my\FriendsX\Main;
-use pocketmine\scheduler\ClosureTask;
 
 class RequestManager {
 
@@ -56,9 +57,18 @@ class RequestManager {
         }
 
         $json = json_encode($this->requests, JSON_PRETTY_PRINT);
-        $plugin->getScheduler()->scheduleDelayedTask(new ClosureTask(function () use ($json) {
-            file_put_contents($this->file, $json);
-        }), 1);
+        if ($json === false) {
+            return;
+        }
+
+        $dir = dirname($this->file);
+        if (!is_dir($dir)) {
+            @mkdir($dir, 0777, true);
+        }
+
+        $tmp = $this->file . '.tmp';
+        file_put_contents($tmp, $json, LOCK_EX);
+        @rename($tmp, $this->file);
     }
 
     public function sendRequest(string $sender, string $target): bool {

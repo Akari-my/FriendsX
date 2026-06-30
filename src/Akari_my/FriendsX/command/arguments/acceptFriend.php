@@ -43,10 +43,11 @@ class acceptFriend implements SubCommand {
             }
         } else {
             $target = strtolower($args[0]);
+            $targetDisplay = $args[0];
         }
 
         if (!$requests->hasRequest($player, $target)) {
-            $sender->sendMessage(LangManager::get("request-expired", ["target" => $target]));
+            $sender->sendMessage(LangManager::get("request-expired", ["target" => $targetDisplay ?? $target]));
             return;
         }
 
@@ -56,13 +57,21 @@ class acceptFriend implements SubCommand {
             return;
         }
 
+        $targetPlayer = Functions::getPlayerByName($target);
+        if ($targetPlayer !== null) {
+            $maxTarget = Functions::getMaxFriendsFor($targetPlayer);
+            if (count($friendsManager->getFriends($target)) >= $maxTarget) {
+                $sender->sendMessage(LangManager::get("friend-target-limit-reached", ["target" => $targetDisplay ?? $target]));
+                return;
+            }
+        }
+
         $requests->removeRequest($player, $target);
         $friendsManager->addFriend($player, $target);
         $friendsManager->addFriend($target, $player);
 
-        $sender->sendMessage(LangManager::get("request-accepted", ["target" => $target]));
+        $sender->sendMessage(LangManager::get("request-accepted", ["target" => $targetDisplay ?? $target]));
 
-        $targetPlayer = Functions::getPlayerByName($target);
         if ($targetPlayer !== null && $targetPlayer->isOnline()) {
             $targetPlayer->sendMessage(LangManager::get("request-accepted-notify", [
                 "player" => $playerName

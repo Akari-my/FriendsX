@@ -18,8 +18,8 @@ friend-left: "§aTwój znajomy §e{name}§a opuścił serwer!"
 request-expired: "§cProśba od §e{target}§c wygasła."
 
 only-player-command: "§c✖ Tylko gracze mogą używać tej komendy!"
-friend-usage: "§eUżyj: §b/friend <add, list, remove, accept, deny, requests, settings, block, unblock, blocked>"
-unknown-subcommand: "§cNieznana podkomenda. Użyj: §b/friend <add, list, remove, accept, deny, requests, settings, block, unblock, blocked>"
+friend-usage: "§eUżyj: §b/friend <add, list, remove, accept, deny, requests, settings, block, unblock, blocked, msg, top, status>"
+unknown-subcommand: "§cNieznana podkomenda. Użyj: §b/friend <add, list, remove, accept, deny, requests, settings, block, unblock, blocked, msg, top, status>"
 
 no-requests: "§eNie masz żadnych oczekujących zaproszeń do znajomych."
 multiple-requests-accept: "§eMasz kilka oczekujących zaproszeń do znajomych:\n{list}\n§eUżyj §b/friend accept <gracz>§e, aby wybrać."
@@ -33,6 +33,23 @@ last-seen: "ostatnio widziany {time} temu"
 
 friend-add-usage: "§cUżyj: /friend add <gracz>"
 friend-remove-usage: "§cUżyj: /friend remove <gracz>"
+
+msg-usage: "§cUżyj: /friend msg <gracz> <wiadomość>"
+msg-received: "§a{nadawca} §7→ §f{wiadomosc}"
+msg-sent: "§aTy §7→ §e{odbiorca}§7: §f{wiadomosc}"
+
+top-header: "§6=== Top znajomych ==="
+top-empty: "§7Brak dostępnych danych."
+top-friends-count: "§7znajomych"
+
+status-current: "§aTwój aktualny status: §e{status}"
+status-usage: "§cUżyj: /friend status <online|away|busy|invisible>"
+status-invalid: "§cNieprawidłowy status. Użyj: online, away, busy, invisible."
+status-set: "§aTwój status został ustawiony na: §e{status}"
+
+friend-fav-added: "§a{odbiorca}§a jest teraz ulubionym znajomym!"
+friend-fav-removed: "§a{odbiorca}§a nie jest już ulubionym znajomym."
+friend-group-set: "§a{odbiorca}§a przeniesiony do grupy: §e{grupa}"
 
 settings-header: "§6Ustawienia znajomych:"
 settings-receive-requests: "§eOtrzymywanie zaproszeń do znajomych: §f{value}"
@@ -48,6 +65,7 @@ you-are-blocked: "§cNie możesz wysłać zaproszenia do znajomych do {target}."
 you-blocked-target: "§cZablokowałeś {target}. Najpierw go odblokuj."
 
 friend-limit-reached: "§cOsiągnąłeś maksymalną liczbę znajomych (§e{limit}§c)."
+friend-target-limit-reached: "§c{target} osiągnął maksymalną liczbę znajomych."
 
 block-usage: "§cUżyj: /friend block <gracz>"
 unblock-usage: "§cUżyj: /friend unblock <gracz>"
@@ -59,6 +77,13 @@ unblocked-success: "§aOdblokowałeś §e{target}§a."
 blocked-list-empty: "§eNie masz zablokowanych graczy."
 blocked-list: "§aZablokowani gracze:\n{list}"
 
+config-reloaded: "§aKonfiguracja została przeładowana."
+
+ui-confirm-remove-title: "§6Potwierdź usunięcie"
+ui-confirm-remove-content: "§7Czy na pewno chcesz usunąć §e{name}§7 ze znajomych?"
+ui-confirm-remove-yes: "§cTak, usuń"
+ui-confirm-remove-no: "§7Anuluj"
+
 ui-main-title: "§6Menu znajomych"
 ui-main-content: "§7Wybierz opcję:"
 ui-main-button-friends: "§eLista znajomych"
@@ -69,8 +94,20 @@ ui-main-button-blocked: "§eZablokowani gracze"
 ui-friends-title: "§6Twoi znajomi"
 ui-friends-content: "§7Kliknij znajomego, aby nim zarządzać."
 ui-friends-empty: "§7Nie masz jeszcze żadnych znajomych."
+
+ui-search-friends: "§7Szukaj znajomych"
+ui-search-friend-name: "§7Nazwa znajomego"
+ui-search-type: "§7Wpisz aby wyszukać..."
+ui-search-no-results: "§7Nie znaleziono znajomych."
+
 ui-friend-actions-title: "§6Znajomy: §e{name}"
 ui-friend-actions-content: "§7Wybierz akcję dla §e{name}§7."
+
+ui-friend-actions-manage: "§7Zarządzaj §e{name}§7. / Grupa: §e{group}"
+ui-friend-actions-fav-add: "§eDodaj do ulubionych §6★"
+ui-friend-actions-fav-remove: "§eUsuń z ulubionych §6★"
+ui-friend-actions-group: "§eZmień grupę"
+
 ui-friend-actions-remove: "§cUsuń znajomego"
 
 ui-requests-title: "§6Zaproszenia do znajomych"
@@ -83,6 +120,9 @@ ui-request-actions-content: "§7Co chcesz zrobić z §e{name}§7?"
 ui-request-actions-accept: "§aAkceptuj"
 ui-request-actions-deny: "§cOdrzuć"
 
+ui-group-select-title: "§6Wybierz grupę"
+ui-group-select-content: "§7Wybierz grupę dla §e{name}§7:"
+
 ui-settings-title: "§6Ustawienia znajomych"
 ui-settings-content: "§7Zaproszenia: {requests}\n§7Powiadomienia: {notifications}"
 ui-settings-toggle-requests: "§ePrzełącz zaproszenia do znajomych ({value})"
@@ -92,5 +132,8 @@ ui-blocked-title: "§6Zablokowani gracze"
 ui-blocked-content: "§7Kliknij gracza, aby go odblokować."
 ui-blocked-empty: "§7Nie masz zablokowanych graczy."
 ui-blocked-entry: "§e{name}"
+
+ui-pagination-previous: "§ePoprzednia strona §6◀"
+ui-pagination-next: "§eNastępna strona §6▶"
 
 ui-button-back: "§7Wróć"

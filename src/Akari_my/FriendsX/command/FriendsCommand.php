@@ -11,6 +11,10 @@ use Akari_my\FriendsX\command\arguments\listFriend;
 use Akari_my\FriendsX\command\arguments\removeFriend;
 use Akari_my\FriendsX\command\arguments\requestsFriend;
 use Akari_my\FriendsX\command\arguments\settingsFriend;
+
+use Akari_my\FriendsX\command\arguments\msgFriend;
+use Akari_my\FriendsX\command\arguments\statusFriend;
+use Akari_my\FriendsX\command\arguments\topFriend;
 use Akari_my\FriendsX\command\arguments\unblockFriend;
 use Akari_my\FriendsX\form\MainForm;
 use Akari_my\FriendsX\Main;
@@ -20,6 +24,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 use pocketmine\plugin\Plugin;
 use pocketmine\plugin\PluginOwned;
+use Akari_my\FriendsX\command\arguments\migrateFriend;
 
 class FriendsCommand extends Command implements PluginOwned {
 
@@ -35,6 +40,11 @@ class FriendsCommand extends Command implements PluginOwned {
     private blockFriend $blockFriend;
     private unblockFriend $unblockFriend;
     private blockedFriend $blockedFriend;
+    private migrateFriend $migrateFriend;
+    private msgFriend $msgFriend;
+
+    private topFriend $topFriend;
+    private statusFriend $statusFriend;
 
     public function __construct(Main $plugin) {
         parent::__construct("friends", "Friends management", "/friend");
@@ -51,6 +61,11 @@ class FriendsCommand extends Command implements PluginOwned {
         $this->blockFriend = new blockFriend();
         $this->unblockFriend = new unblockFriend();
         $this->blockedFriend = new blockedFriend();
+        $this->migrateFriend = new migrateFriend();
+        $this->msgFriend = new msgFriend();
+
+        $this->topFriend = new topFriend();
+        $this->statusFriend = new statusFriend();
 
         $this->setPermission("friendsx.command");
     }
@@ -102,6 +117,28 @@ class FriendsCommand extends Command implements PluginOwned {
                 break;
             case "blocked":
                 $this->blockedFriend->execute($sender, $args);
+                break;
+            case "migrate":
+                $this->migrateFriend->execute($sender, $args);
+                break;
+            case "help":
+                $sender->sendMessage(LangManager::get("friend-usage"));
+                break;
+            case "reload":
+                $this->plugin->getLogger()->info("Reloading config...");
+                $this->plugin->reloadConfig();
+                LangManager::init($this->plugin);
+                $sender->sendMessage(LangManager::get("config-reloaded"));
+                break;
+            case "msg":
+                $this->msgFriend->execute($sender, $args);
+                break;
+
+            case "top":
+                $this->topFriend->execute($sender, $args);
+                break;
+            case "status":
+                $this->statusFriend->execute($sender, $args);
                 break;
             default:
                 $sender->sendMessage(LangManager::get("unknown-subcommand"));

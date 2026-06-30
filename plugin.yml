@@ -1,5 +1,5 @@
 name: FriendsX
-version: 1.2.0
+version: 2.0.0
 main: Akari_my\FriendsX\Main
 api: 5.0.0
 author: Akari_my
@@ -8,3 +8,6 @@ description: Advanced friend system
 permissions:
   friendsx.command:
     default: true
+  friendsx.migrate:
+    description: Allows running data migration
+    default: op

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Akari_my\FriendsX\data;
 
 use Akari_my\FriendsX\Main;
@@ -11,6 +13,10 @@ class JSONProvider implements DataProvider {
 
     public function __construct(private Main $plugin) {
         $this->file = $plugin->getDataFolder() . "data/friends.json";
+        $dir = dirname($this->file);
+        if (!is_dir($dir)) {
+            @mkdir($dir, 0777, true);
+        }
         $this->load();
     }
 
@@ -23,7 +29,19 @@ class JSONProvider implements DataProvider {
     }
 
     public function save(): void {
-        file_put_contents($this->file, json_encode($this->data, JSON_PRETTY_PRINT));
+        $dir = dirname($this->file);
+        if (!is_dir($dir)) {
+            @mkdir($dir, 0777, true);
+        }
+
+        $json = json_encode($this->data, JSON_PRETTY_PRINT);
+        if ($json === false) {
+            return;
+        }
+
+        $tmp = $this->file . '.tmp';
+        file_put_contents($tmp, $json);
+        @rename($tmp, $this->file);
     }
 
     public function getFriends(string $player): array {

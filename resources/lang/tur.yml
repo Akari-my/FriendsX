@@ -18,8 +18,8 @@ friend-left: "§aArkadaşın §e{name}§a sunucudan çıktı!"
 request-expired: "§c§e{target}§c adlı oyuncudan gelen istek süresi doldu."
 
 only-player-command: "§c✖ Bu komut sadece oyuncular tarafından kullanılabilir!"
-friend-usage: "§eKullanım: §b/friend <add, list, remove, accept, deny, requests, settings, block, unblock, blocked>"
-unknown-subcommand: "§cBilinmeyen alt komut. Kullanım: §b/friend <add, list, remove, accept, deny, requests, settings, block, unblock, blocked>"
+friend-usage: "§eKullanım: §b/friend <add, list, remove, accept, deny, requests, settings, block, unblock, blocked, msg, top, status>"
+unknown-subcommand: "§cBilinmeyen alt komut. Kullanım: §b/friend <add, list, remove, accept, deny, requests, settings, block, unblock, blocked, msg, top, status>"
 
 no-requests: "§eBekleyen arkadaşlık isteğin yok."
 multiple-requests-accept: "§eBirden fazla arkadaşlık isteğin var:\n{list}\n§eSeçmek için §b/friend accept <oyuncu>§e kullan."
@@ -33,6 +33,23 @@ last-seen: "son görüldü {time} önce"
 
 friend-add-usage: "§cKullanım: /friend add <oyuncu>"
 friend-remove-usage: "§cKullanım: /friend remove <oyuncu>"
+
+msg-usage: "§cKullanım: /friend msg <oyuncu> <mesaj>"
+msg-received: "§a{gonderen} §7→ §f{mesaj}"
+msg-sent: "§aSen §7→ §e{hedef}§7: §f{mesaj}"
+
+top-header: "§6=== Top Arkadaşlar ==="
+top-empty: "§7Henüz veri mevcut değil."
+top-friends-count: "§7arkadaş"
+
+status-current: "§aMevcut durumun: §e{status}"
+status-usage: "§cKullanım: /friend status <online|away|busy|invisible>"
+status-invalid: "§cGeçersiz durum. Kullanım: online, away, busy, invisible."
+status-set: "§aDurumun şu şekilde ayarlandı: §e{status}"
+
+friend-fav-added: "§a{hedef}§a artık favori arkadaşın!"
+friend-fav-removed: "§a{hedef}§a artık favori arkadaşın değil."
+friend-group-set: "§a{hedef}§a gruba taşındı: §e{grup}"
 
 settings-header: "§6Arkadaş ayarları:"
 settings-receive-requests: "§eArkadaşlık isteği al: §f{value}"
@@ -48,6 +65,7 @@ you-are-blocked: "§c{target} adlı oyuncuya arkadaşlık isteği gönderemezsin
 you-blocked-target: "§c{target} adlı oyuncuyu engelledin. Önce engeli kaldır."
 
 friend-limit-reached: "§cMaksimum arkadaş sayısına ulaştın (§e{limit}§c)."
+friend-target-limit-reached: "§c{target} maksimum arkadaş sayısına ulaştı."
 
 block-usage: "§cKullanım: /friend block <oyuncu>"
 unblock-usage: "§cKullanım: /friend unblock <oyuncu>"
@@ -59,6 +77,13 @@ unblocked-success: "§a§e{target}§a adlı oyuncunun engelini kaldırdın."
 blocked-list-empty: "§eEngellediğin oyuncu yok."
 blocked-list: "§aEngellenen oyuncular:\n{list}"
 
+config-reloaded: "§aYapılandırma başarıyla yeniden yüklendi."
+
+ui-confirm-remove-title: "§6Kaldırmayı onayla"
+ui-confirm-remove-content: "§7§e{name}§7 adlı kişiyi arkadaşlarınızdan kaldırmak istediğinize emin misiniz?"
+ui-confirm-remove-yes: "§cEvet, kaldır"
+ui-confirm-remove-no: "§7İptal"
+
 ui-main-title: "§6Arkadaş menüsü"
 ui-main-content: "§7Bir seçenek seç:"
 ui-main-button-friends: "§eArkadaş listesi"
@@ -69,8 +94,20 @@ ui-main-button-blocked: "§eEngellenen oyuncular"
 ui-friends-title: "§6Arkadaşların"
 ui-friends-content: "§7Yönetmek istediğin arkadaşına tıkla."
 ui-friends-empty: "§7Henüz hiç arkadaşın yok."
+
+ui-search-friends: "§7Arkadaş ara"
+ui-search-friend-name: "§7Arkadaş adı"
+ui-search-type: "§7Aramak için yaz..."
+ui-search-no-results: "§7Aramanla eşleşen arkadaş bulunamadı."
+
 ui-friend-actions-title: "§6Arkadaş: §e{name}"
 ui-friend-actions-content: "§7§e{name}§7 için bir işlem seç."
+
+ui-friend-actions-manage: "§7{name} yönet. / Grup: §e{group}"
+ui-friend-actions-fav-add: "§eFavorilere ekle §6★"
+ui-friend-actions-fav-remove: "§eFavorilerden çıkar §6★"
+ui-friend-actions-group: "§eGrubu değiştir"
+
 ui-friend-actions-remove: "§cArkadaşı sil"
 
 ui-requests-title: "§6Arkadaşlık istekleri"
@@ -83,6 +120,9 @@ ui-request-actions-content: "§7§e{name}§7 isteğiyle ne yapmak istiyorsun?"
 ui-request-actions-accept: "§aKabul et"
 ui-request-actions-deny: "§cReddet"
 
+ui-group-select-title: "§6Grup seç"
+ui-group-select-content: "§7{name} için bir grup seç:"
+
 ui-settings-title: "§6Arkadaş ayarları"
 ui-settings-content: "§7İstekler: {requests}\n§7Bildirimler: {notifications}"
 ui-settings-toggle-requests: "§eArkadaşlık isteklerini aç/kapat ({value})"
@@ -92,5 +132,8 @@ ui-blocked-title: "§6Engellenen oyuncular"
 ui-blocked-content: "§7Engeli kaldırmak için oyuncuya tıkla."
 ui-blocked-empty: "§7Engellediğin oyuncu yok."
 ui-blocked-entry: "§e{name}"
+
+ui-pagination-previous: "§eÖnceki sayfa §6◀"
+ui-pagination-next: "§eSonraki sayfa §6▶"
 
 ui-button-back: "§7Geri"

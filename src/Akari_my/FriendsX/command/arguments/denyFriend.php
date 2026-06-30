@@ -41,14 +41,15 @@ class denyFriend implements SubCommand {
             }
         } else {
             $target = strtolower($args[0]);
+            $targetDisplay = $args[0];
         }
 
         if (!$requests->hasRequest($player, $target)) {
-            $sender->sendMessage(LangManager::get("player-not-in-requests", ["target" => $target]));
+            $sender->sendMessage(LangManager::get("player-not-in-requests", ["target" => $targetDisplay ?? $target]));
             return;
         }
 
         $requests->removeRequest($player, $target);
-        $sender->sendMessage(LangManager::get("request-denied", ["target" => $target]));
+        $sender->sendMessage(LangManager::get("request-denied", ["target" => $targetDisplay ?? $target]));
     }
 }
